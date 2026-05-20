@@ -1,0 +1,109 @@
+% !TEX program = xelatex
+\documentclass[12pt]{article}
+% 在 Overleaf 中编译时，请使用 \usepackage{ctex}，并删去 [fontset=windows]
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{\Huge \textbf{实验X 实验名称}}
+\author{专业：微电子科学与技术专业 \quad 学号：24308172 \quad 姓名：王钰铖}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{一. 实验目的}
+\begin{enumerate}
+    \item % [请填入实验目的1]
+    \item % [请填入实验目的2]
+\end{enumerate}
+
+\section*{二. 实验内容概要}
+
+\vspace{1em}\noindent{\large \textbf{1. 实验原理概述：}}
+\begin{itemize}
+    \item \textbf{[原理小标题1]}： % [请填入原理描述]
+    \item \textbf{[原理小标题2]}： % [请填入原理描述]
+\end{itemize}
+
+\vspace{1em}\noindent{\large \textbf{2. 核心实验内容：}}
+\begin{enumerate}
+    \item[(1)] \textbf{[实验内容1]}： % [请填入具体说明]
+    \item[(2)] \textbf{[实验内容2]}： % [请填入具体说明]
+\end{enumerate}
+
+\section*{三. 具体实验}
+
+\subsection*{任务一：[任务名称]}
+% [请填入简单的操作步骤或描述]
+
+\subsubsection*{1. 测试结果}
+
+% 单图插入示例
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{[图片文件名.png]}
+\caption{[单幅图片说明]}
+\label{fig:single_pic}
+\end{figure}
+
+% 数据记录表格示例
+\begin{table}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \begin{tabular}{c*{6}{c}}
+        \toprule
+        参数 / 测量点 & 1 & 2 & 3 & 4 & 5 & 6 \\
+        \midrule
+        输出数据 (单位) & & & & & & \\
+        \bottomrule
+        \end{tabular}
+    }
+    \caption{[测试结果表格标题]}
+\end{table}
+
+\subsubsection*{2. 结果分析}
+\begin{itemize}
+    \item \textbf{[分析点1]：} % [请填入分析及结论]
+    \item \textbf{[分析点2]：} % [请填入分析及结论]
+\end{itemize}
+
+\subsection*{任务二：[任务名称]}
+% [请填入简单的操作步骤或描述]
+
+\subsubsection*{1. 测试结果}
+
+% 双图并排插入示例
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, height=3.5cm]{[左侧图片名.jpg]}
+        \caption{[左侧图片说明]}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, height=3.5cm]{[右侧图片名.jpg]}
+        \caption{[右侧图片说明]}
+    \end{minipage}
+    \vspace{0.5em}
+    \label{fig:double_pic}
+\end{figure}
+
+\subsubsection*{2. 结果分析}
+\begin{itemize}
+    \item \textbf{[分析点1]：} % [请填入分析及结论]
+    \item \textbf{[分析点2]：} % [请填入分析及结论]
+\end{itemize}
+
+
+\section*{四. 总结}
+% [请填入实验过程总结、心得体会、误差分析等]
+
+\end{document}
