@@ -1,0 +1,301 @@
+% !TEX program = xelatex
+\documentclass[12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{\Huge \textbf{实验二 高频功率放大器}}
+\author{专业：微电子科学与工程 \quad 学号：24308172 \quad 姓名：王钰铖}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{一. 实验目的}
+\begin{enumerate}
+    \item 通过实验，加深对丙类功率放大器基本工作原理的理解，掌握丙类功率放大器的调谐特性。
+    \item 掌握输入激励电压，集电极电源电压及负载变化对放大器工作状态的影响。
+    \item 通过实验进一步了解调幅的工作原理。
+\end{enumerate}
+
+\section*{二. 实验内容概要}
+
+\vspace{1em}\noindent{\large \textbf{1. 实验原理概述：}}
+\begin{itemize}
+    \item \textbf{高频功率放大器与丙类放大工作态}：高频功率放大器是将直流能量转换为高频交流输出的器件。为了提升效率，大功率放大级常将静态工作点偏置在截止区域，即采用丙类（C类）工作状态。在此状态下，集电极电流脉冲仅在输入高频激励的正半周极短时间内导通，也就是通角 $\theta < 90^\circ$。相较甲类（$\eta \approx 50\%$）与乙类（$\eta \approx 78\%$），丙类大幅提高了晶体管在关断期的能量保存，效率显著增加。
+    \item \textbf{集电极电流脉冲傅里叶展开与 LC 选频网络}：由于通角小，集电极电流 $i_c$ 呈现剧烈断续的余弦脉冲片段。依据傅里叶级数展开定理：
+    \[
+    i_c = I_{c0} + I_{c1m} \cos(\omega t) + I_{c2m} \cos(2\omega t) + I_{c3m} \cos(3\omega t) + \dots
+    \]
+    其中 $I_{c0}$ 为直流分量，$I_{c1m}$ 为基波交流振幅。为提纯信号，不能单纯采用电阻负载，而是并联在集电极调谐于 $\omega$ 的 LC 谐振回路。阻抗选频特性使回路在基波频率处呈现最大纯并联谐振阻抗 $R_p$；对待直流分量与高次谐波等效为短路，从而在回路上产生巨幅电压降 $U_{cm} = I_{c1m} R_p$。最终使得管压降被过滤恢复为不失真的正弦震荡规律，即 $u_{ce}(t) = E_c - U_{cm}\cos(\omega t)$。
+    \item \textbf{工作状态的演变（欠压、临界与过压机制）}：
+        放大系统所处的物理稳态基于管压低谷点 $u_{ce(\min)} = E_c - U_{cm}$，能否下探至饱和临界电压而界定，主要受三参数钳制：
+        \begin{enumerate}
+            \item \emph{负载电阻 $R_c$ 的牵引}：随 $R_L$ 上调，动态负载线上沿陡峭转为平缓，$U_{cm}$ 爬升迫使 $u_{ce(\min)}$ 降低。当未入饱和态为\textbf{欠压状态}，余弦电流饱满；抵达饱和边缘为\textbf{临界状态}，此态功率与效率输出常居首位；若极高负载强行挤压入深饱和区，则跌入\textbf{过压状态}，产生典型的“马鞍形”电流下凹失真。
+            \item \emph{激励电压 $U_{bm}$ 的增压}：在电源电压与负载固化时，拉升前级激励迫使集电极峰谷推移，强行顶穿动态区间从而把欠压波形逐渐压至过凹。
+            \item \emph{电源电压 $E_c$ 的坍塌}：反弹空间受限，随 $E_c$ 大幅回落减小，管压降无法提供足够势能空间，势必快速令状态跨临界而深陷过压泥潭。
+        \end{enumerate}
+\end{itemize}
+
+\vspace{1em}\noindent{\large \textbf{2. 核心实验内容：}}
+\begin{enumerate}
+    \item[(1)] \textbf{前置甲类放大级波形跟踪测试}：在通信 6.3MHz 的极小射频激励下，比对该前置极输入与直通后的幅度爬升情况，佐证其作为末级推挽隔离的纯线性缓冲属性级。
+    \item[(2)] \textbf{探究激励电压触发丙类功放形态演化}：于 2.1MHz 带宽窗口，剥离干扰，通过示波器细致收调端元激励源（RF输入）；见证发射极处提取的集电极电流脉冲从“顺滑余弦山峰（欠压）”、到“微平尖峰（临界）”、再到“开叉马鞍陷谷（过压）”的非线性解构历程。
+    \item[(3)] \textbf{量测集电极直供电压对稳态界面的降压扰动}：锁死前端驱动与终端电阻，逆向渐减直流供电 $E_c$ (诸如7V降幅至3V)，从物理根源剖析供血受限是强制系统加速进入饱和马鞍过压失真的元凶。
+    \item[(4)] \textbf{匹配阻抗牵引输出状态的梯级测试}：定压与定振境况下扭转可变分压阵列。断开电容隔绝后直测纯电阻参量，恢复连通再对照波形。从而映射出诸如“低阻对应欠压电流”到“大阻抗引发剧烈波变马鞍形”的匹配关联法则。
+    \item[(5)] \textbf{极点扫描获取功放频带调谐特性}：聚焦收发频点 6.3MHz，按 200kHz 精准踏幅于中心两翼展开全频段采样，构建横轴频率、纵轴幅度的动态共振凸峰响应图或称品质因数显影。
+    \item[(6)] \textbf{外源 AM 调幅波通信机理注入观察}：于系统外沿接入 Audio音频控制信息，见证并描摹高频电信号被其调制后的等平幅宽随规律起伏鼓荡的经典 AM 通信包络影像。
+    \item[(7)] \textbf{极位终端驻波功率及效能换算}：捕捉恰遇临界转折而发出的最佳峰峰值未畸变电压。借助固定串接于终端网络 $100\Omega$ 实测端口，应用均方根值法直接推演收音发射前真正放大的理论无失真做功水平。
+\end{enumerate}
+
+\section*{三. 具体实验}
+
+\subsection*{任务一：测试前置放大级输入、输出波形}
+
+将高频信号源频率设定为 6.3MHz，调整峰-峰值约 400mV，通过连接线接入高频输入端 3P2。使用示波器监控输入点 3TP2 和输出点 3TP3。由于该起初级负载为电阻而无选频保护作用，以此记录初级放大的参数和形态特征。
+
+\subsubsection*{1. 测试结果}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{2前置放大级输入输出波形.png}
+\caption{前置放大级输入与输出波形}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{输入幅度 ($U_{in}$)}： $400\text{mV}_{p-p}$
+    \item \textbf{输出幅度 ($U_{out}$)}： $4.00\text{V}_{p-p}$
+    \item \textbf{放大倍数 ($A$)}： $A = \frac{U_{out}}{U_{in}} = \frac{4000\text{mV}}{400\text{mV}} = 10$ 
+\end{itemize}
+
+\subsubsection*{2. 结果分析}
+
+通过以上测试数据和波形观察可知：
+该前置放大级（由 3Q1 构成）工作于典型的甲类（A类）线性放大状态。在注入 $400\text{mV}_{p-p}$ 较小的高频正弦激励信号时，晶体管能够维持在伏安特性的线性中段运行，输出电压波形被等比例忠实放大到了 $4.00\text{V}_{p-p}$（电压放大倍数 $A=10$），且波形上下对称，没有出现截顶或削底等非线性饱和、截止失真。
+
+由于该级集电极采用的是纯电阻负载，并非 LC 谐振槽路，所以本级不存在选频和滤波的作用。其核心目的在于作末级丙类功放前的“线性前驱驱动与缓冲级”，即将几百毫伏的微弱射频源信号，快速放频拉升至数伏特的激励电平，以便随后足以驱动后级丙类放大器突破其反向偏压势垒限制，确保后续非线性大功率管能得到足够强劲的射频激励。
+
+\subsection*{任务二：激励电压、电源电压及负载变化对丙类功放工作状态的影响}
+
+将开关 3K1 拨至右侧，配置 2.1MHz 的中心参考频率供观测（此频段下电流的三种状态更易复现）。连接示波器至射极测试点 3TP5 以观察射极脉冲电流。
+
+\subsubsection*{(1) 激励电压 $U_b$ 对工作状态的影响}
+
+保持 $E_c = 4\text{V}$，负载 $R_L \approx 4\text{k}\Omega$（3K2置位于“on”）。微调高频信号源频率使得波形对称，此后逐步改变信号幅度（即激励端 $U_b$），详细记录在幅度演变下，波形顶部的变平、甚至下沉马鞍状等行为。
+
+\textbf{1. 测试结果：}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.1欠压1.png}
+        \caption{欠压状态电流波形}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.1临界.png}
+        \caption{临界状态电流波形}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.1过压状态.png}
+        \caption{过压状态波形}
+    \end{minipage}
+\end{figure}
+
+\textbf{2. 结果分析：}
+观察波形随激励电压 $U_b$ 的变化，可以得出如下结论：
+
+当激励信号 $U_b$ 较小时，晶体管仍工作在放大区，集电极电流脉冲幅度随 $U_b$ 增大而等比上升，波峰呈尖锐余弦脉冲状，为典型的\textbf{欠压状态}；
+
+进一步增大 $U_b$，电流波峰即将触及饱和边界，达到\textbf{临界状态}，此时能从集电极提取到最佳能量；
+
+若继续过度增加 $U_b$ 幅度，由于集电极压降余地耗尽，晶体管瞬间陷入深度饱和，电流脉冲中心无法继续升高反而被横向切平乃至下陷，形成了顶部凹陷的“\textbf{马鞍形失真}”，这就是经典的\textbf{过压状态}特征。
+
+\subsubsection*{(2) 集电极电源电压 $E_c$ 对工作状态的影响}
+
+固定 $U_b$ 的幅度为前期临界状态参考值左右，负载定格在 $4\text{k}\Omega$。随后调节 3W3 电位器将 $E_c$ 游移于 3V 到 7V 之间。
+
+\textbf{1. 测试结果：}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.2欠压.png}
+        \caption{$E_c$ 较高时(欠压)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.2临界.png}
+        \caption{$E_c$ 适中时(临界)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.2过压.png}
+        \caption{$E_c$ 减小时(过压)}
+    \end{minipage}
+\end{figure}
+
+\textbf{2. 结果分析：}
+保持激励 $U_b$ 与负载阻抗恒定的情况下，调节供电电源 $E_c$ 的值，波形发生了逆向的状态转移规律。
+
+当 $E_c$ 充足（高达 7V 左右）时，集电极具备充足的动态摆幅空间（$u_{ce} = E_c - U_{cm} > U_{ces}$），晶体管运行在\textbf{欠压状态}，无失真；
+
+随后若调低 $E_c$，直流供电不足将强制缩减电压余裕，运行点越过\textbf{临界状态}；
+
+极端情况下，当供电 $E_c$ 继续减小至 3V 及以下端点时，最小集电极瞬态电压触底饱和降势垒（$u_{ce(min)} < U_{ces}$），波峰发生强烈塌陷，陷入由“饿电”引发的\textbf{过压状态}马鞍波形。这表明电源低落极易触发放大器的过压失真。
+
+\subsubsection*{(3) 负载电阻 $R_L$ 变化对工作状态的影响}
+
+锁定 $E_c = 4\text{V}$ 及 $U_b$ 固定，通过旋转电位器 3W4 逐渐改变负载电阻的大小（测量电阻前先将3K2拨至“off”，后复位“on”）。
+
+\textbf{1. 测试结果：}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.3欠压(0.997k).png}
+        \caption{较小 $R_L$ (欠压)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.3临界(1.576k).png}
+        \caption{临界 $R_L$ (临界)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{3.3过压(5.15k).png}
+        \caption{较大 $R_L$ (过压)}
+    \end{minipage}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{欠压状态时的负载}：$0.997\text{k}\Omega$
+    \item \textbf{临界状态时的负载}：$1.576\text{k}\Omega$
+    \item \textbf{过压状态时的负载}：$5.150\text{k}\Omega$
+\end{itemize}
+
+\textbf{2. 结果分析：}
+通过上述对负载 $R_L$ 调整的实验波形不难发现，外接负载直接改变了交流等效负载线的斜率。其物理对应机制为：
+\begin{enumerate}
+    \item \textbf{欠压状态（轻载）：} 当 $R_L$ 较小（$0.997\text{k}\Omega$）时，交流等效负载线十分陡峭，集电极基波压降微弱。晶体管运行在放大区，未临近饱和边沿。波形虽无失真，但管耗大、输出效率低，不利于高频发射。
+    \item \textbf{临界状态（适载）：} 当 $R_L$ 逐渐上调至匹配阻抗（$1.576\text{k}\Omega$）时，负载线斜率恰好使瞬态工作点落在特性曲线的弯折处。此时不仅波形完整不失真，集电极基波分量的能量提取也达到峰值极点，做功最佳。
+    \item \textbf{过压状态（重载）：} 若进一步大幅增加负载（至 $5.150\text{k}\Omega$），高阻抗带来了过大的基波压降。负载线过于平缓，工作轨迹强制突入深度饱和区。电流波峰瞬间被切平甚至向内严重凹陷，形成“马鞍形”严重失真，同时集电极输出功率大幅度流失。
+\end{enumerate}
+综上总结，该实验完美展示了：要使发射网络达到功率输出与波形保真的最佳结合，必须通过改变 $R_L$ 实现“阻抗匹配”从而停留在理想的临界状态。
+
+\subsection*{任务三：功放调谐特性测试}
+
+4．功放调谐特性测试：3K1置“左侧”，高频信号源接入前置级输入端（3P2），峰-峰值400mV。以6.3MHz的频率为中心点，以200kHz为频率间隔，向左右两侧画出5个频率测量点。首先将高频信号源设置为6.3MHz，峰-峰值为400mV，用示波器测试3TP4；然后高频信号源按照表格上的频率变化，保持幅度峰-峰值为400mV左右（3P2），用示波器测量3TP4的电压值。测出与频率相对应的电压值填入表格，然后画出频率与电压的关系曲线。
+
+\subsubsection*{1. 测试结果}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c*{11}{c}}
+    \toprule
+    $f$ (MHz) & 5.3 & 5.5 & 5.7 & 5.9 & 6.1 & 6.3 & 6.5 & 6.7 & 6.9 & 7.1 & 7.3 \\
+    \midrule
+    $V_c (V_{p-p})$ & 4.4 & 4.8 & 5.2 & 6.2 & 7.8 & 10.8 & 13.2 & 13.8 & 12.2 & 8.4 & 5.6 \\
+    \bottomrule
+    \end{tabular}
+    \caption{功放调谐特性测试结果}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{4功放调谐特性(6.6MHz).png}
+    \caption{高频功率放大器调谐特性实测波形}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{4功放调谐特性曲线_绘制.png}
+    \caption{频率与电压的关系曲线}
+\end{figure}
+
+\subsubsection*{2. 结果分析}
+
+结合测量数据可以看出，该高频功率放大器的谐振频点及带宽具有以下明显特征：
+\begin{itemize}
+    \item \textbf{中心频率偏移情况}：理论上回路预设的调谐频率位点应为 6.3MHz，但在实际扫频点测中发现，输出幅度在 6.7MHz 处攀升至最大的 $13.8\text{V}_{p-p}$，而 6.3MHz 处仅为 $10.8\text{V}_{p-p}$。这说明实验环境中的回路实际等效寄生电容（如晶体管结电容与探头分布电容等）与理论值有所偏差，导致物理谐振中心频点发生漂移高至 6.7MHz。
+    \item \textbf{选频滤波与谐振带特性}：电压幅度由中心频点 6.7MHz 向两翼急剧跌落。在偏离约 1MHz 左右的区域（5.7MHz 及 7.3MHz），输出信号迅速衰退到 $5.2\text{V}_{p-p}$ 和 $5.6\text{V}_{p-p}$。这种类似于单调谐的“钟形”频率响应，强力证明了丙类状态下的 LC 谐振槽路极高的选频滤除与波形平滑提取作用。
+\end{itemize}
+
+\subsection*{任务四：功放调幅波的观察}
+
+将回路锁定在 6.3MHz 谐振中心。通过 3P1 端子注入音频调制信号。以示波器观察 3TP4 的载波波形随输入音频信号幅度涨落而形成的包络线。
+
+\subsubsection*{1. 测试结果}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{5正弦波调幅.png}
+        \caption{正弦波调幅}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{5三角波调幅.png}
+        \caption{三角波调幅}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{5方波调幅.png}
+        \caption{方波调幅}
+    \end{minipage}
+\end{figure}
+
+\subsubsection*{2. 结果分析}
+当不同的低频调制信号（正弦波、三角波、方波）叠加上偏置电路时，便等效于动态地改变了 $E_c$ 或 $E_b$。在集电极载波保持不变的情况下，低频调制电压的极性与幅度波动直接主导了高频输出信号的外包络。
+\begin{enumerate}
+    \item \textbf{正弦波调幅}：包络线平滑追随正弦信号，波形完美起伏，展示了调幅收音机通信中最为基础的 AM 无失真调制过程。
+    \item \textbf{三角波调幅}：可以清晰观察到包络呈现直线上升与下降的锐角折变，其边缘起伏反映了基频以外更高次丰富谐波对包络形态的直接干预。
+    \item \textbf{方波调幅}：当调制信号处于高电平时，高频载波全副脉冲输出；当方波跌至低电平时（或是过调制截带），载波包络近乎瞬间被完全钳制消失，整体呈现出经典数字通断键控（ASK）类型的断续脉冲串分布。
+\end{enumerate}
+综合来看，该非线性丙类放大器极好地执行了频率搬移以及高频能量包络塑形的双重调制职责。
+
+\subsection*{任务五：功放输出功率测试}
+
+调谐至最优状态下，接通 3K3 与 3K4。通过调整 6.3MHz 载波使其在此终级功放上获得最大的无失真输出。使用示波器读取最终输出点 3TP8 （电阻 3R02，阻值 100$\Omega$）处的交流电压。
+
+\subsubsection*{1. 测试结果与数据}
+\begin{itemize}
+    \item \textbf{最大无失真输出峰峰值 $V_{p-p}$}：$11.5\text{V}$
+    \item \textbf{转换为电路有效值 $U_{rms}$}：$U_{rms} = \frac{V_{p-p}}{2\sqrt{2}} \approx \frac{11.5}{2.828} \approx 4.066\text{V}$
+    \item \textbf{实际端路输出功率 $P_o$}：$P_o = \frac{U_{rms}^2}{R_L} = \frac{4.066^2}{100} \approx 0.165\text{W} = 165\text{mW}$
+\end{itemize}
+
+\subsubsection*{2. 结果分析}
+经过临界状态和阻抗匹配的精细调节，系统能够提供高达 $11.5\text{V}_{p-p}$ 的最大无失真载波信号。将其换算后得出，该丙类功率放大器的末端实际带负载做功达到了 $165\text{mW}$。
+
+这一输出证明丙类高频功放凭借着让电路工作在非线性的大信号受控开关状态，配合高品质因数（Q值）的 LC 谐振槽路滤波，不仅能成功地将断续的脉冲电流复原为平滑正弦波，还能对微弱信号进行极高效率的功率放大。
+
+\section*{四. 实验总结与体会}
+
+本次实验从基础现象到理论推导，系统性地带领我们解构了“高频大信号丙类功率放大器”的工作精髓。
+
+1. \textbf{工作状态与调节机制的相互制约}：实验直观展现了负载 $R_L$、集电极电源 $E_c$ 及基极激励 $U_b$ 这“三驾马车”对放大器三态（欠压、临界、过压）的深远影响。特别是看到由于集电极饱压导致波峰下陷所形成的经典“马鞍形”失真（过压状态），加深了对动态负载线跨越伏安特性饱和区的物理理解。
+
+2. \textbf{LC谐振网络的选频与包络魅力}：丙类放大的非线性本质意味着严重的电流谐波分散。但借助谐振频带（6.3MHz）内的高频调谐，有效过滤了其他杂散频偏波形。同时，三波形（正弦、三角、方波）的 AM 调制图像让我直观触及到了能量包络塑型在通信与发射领域的奇妙应用。
+
+3. \textbf{精密测试的操作意识}：射频频段非常容易受到空间寄生电容的高频串扰。通过本次的细致排线、示波器通道阻抗隔离、接地回路处理以及寻觅最高效的临界电阻点，锻炼了我们系统性排查微波信号和操作高频器械的工程实战能力。
+
+\end{document}
