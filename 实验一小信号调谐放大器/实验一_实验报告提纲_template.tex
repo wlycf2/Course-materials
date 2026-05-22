@@ -1,0 +1,234 @@
+% !TEX program = xelatex
+\documentclass[12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{\Huge \textbf{实验一 小信号调谐放大器}}
+\author{专业：【在此输入专业全称】 \quad 学号：【在此输入学号】 \quad 姓名：【在此输入姓名】}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{一. 实验目的}
+% 这里填写实验对应的具体目的，分点列出
+\begin{enumerate}
+    \item 【实验目的1】
+    \item 【实验目的2】
+    \item 【实验目的3】
+\end{enumerate}
+
+\section*{二. 实验内容概要}
+
+\vspace{1em}\noindent{\large \textbf{1. 实验原理概述：}}
+\begin{itemize}
+    \item \textbf{单调谐放大器}：【简述单调谐放大器原理】
+    \item \textbf{双调谐回路放大器}：【简述双调谐放大器原理】
+    \item \textbf{放大器动态特性}：【简述动态范围相关原理】
+\end{itemize}
+
+\vspace{1em}\noindent{\large \textbf{2. 核心实验内容：}}
+\begin{enumerate}
+    \item[(1)] \textbf{【关键内容1】}：【详细说明操作方法】
+    \item[(2)] \textbf{【关键内容2】}：【详细说明操作方法】
+    \item[(3)] \textbf{【关键内容3】}：【详细说明操作方法】
+\end{enumerate}
+
+\section*{三. 具体实验}
+
+\subsection*{任务一：单调谐放大器幅频特性测量}
+
+% 这里填写具体的实验任务一流程简述
+【此处填写实验操作说明和测试环境配置描述】
+
+\subsubsection*{1. 测试结果}
+
+\textbf{a. 以下为扫频法的测试结果：}
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{【请添加扫频法截图路径】}
+\caption{扫频法测得的单调谐放大器幅频特性}
+\label{fig:sweep_freq_result}
+\end{figure}
+
+\textbf{b. 示波器输出结果：}
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{【请添加示波器截图路径】}
+\caption{单调谐示波器截图}
+\label{fig:osc_result}
+\end{figure}
+
+
+\textbf{c. 以下为点测法的测试结果及单调放大器的幅频特性曲线：}
+
+\begin{table}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \begin{tabular}{c*{14}{c}}
+        \toprule
+        % 在此处填入输入频率
+        输入频率 $f$ (MHz) & 【频率1】 & 【频率2】 & 【...】 \\
+        \midrule
+        % 在此处填入输出幅度
+        输出幅度 $U_{o}$ (mV) & 【幅度1】 & 【幅度2】 & 【...】 \\
+        \bottomrule
+        \end{tabular}
+    }
+    \caption{单调谐放大器幅频特性测试结果}
+\end{table}
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{【在此添加特性曲线图片路径】}
+\caption{单调谐放大器幅频特性曲线}
+\label{fig:single_tuned_curve}
+\end{figure}
+
+\subsubsection*{2.结果分析}
+
+\textbf{测试数据与通频带分析：}
+\begin{itemize}
+    \item \textbf{单调谐幅频特性：} 【在此处填写对最大值及中心频率偏移等现象的分析】
+    \item \textbf{通频带计算：} 【在此处填写通频带的计算过程和结果分析】
+\end{itemize}
+
+\subsection*{任务二：观察集电极负载对单调谐放大器幅频特性的影响}
+
+\subsubsection*{1. 测试结果}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        % \includegraphics[width=\textwidth, height=3.5cm]{【请在此处替换为左侧图片路径】} 
+        \caption{断开负载时的特性曲线}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        % \includegraphics[width=\textwidth, height=3.5cm]{【请在此处替换为右侧图片路径】} 
+        \caption{接通负载时的特性曲线}
+    \end{minipage}
+    \vspace{0.5em}
+\end{figure}
+
+\subsubsection*{2. 结果分析}
+\begin{itemize}
+    \item \textbf{有载品质因数与通频带的关系：} 【分析负载对Q值和通频带的具体影响】
+    \item \textbf{增益变化：} 【分析并联谐振阻抗及电压增益的对应变化】
+\end{itemize}
+
+\subsection*{任务三：双调谐回路谐振放大器幅频特性测量}
+
+% 这里填写具体的实验任务三流程简述
+【此处填写调整开关及示波器测试方法的详细说明】
+
+\subsubsection*{1. 测试结果}
+
+\textbf{a. 扫频法输出结果及收集到的数据如下：}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c*{7}{c}}
+    \toprule
+    % 根据具体数据长度调整
+    输入频率 $f$ (MHz) & 【频率1】 & 【频率2】 & 【...】 \\
+    \midrule
+    \textbf{输出幅度 $U_{o}$ (mV)} & 【幅度1】 & 【幅度2】 & 【...】 \\
+    \bottomrule
+    \end{tabular}
+    \caption{双调谐放大器幅频特性测试结果}
+    \label{tab:double_tuned_results}
+\end{table}
+
+\begin{itemize}
+    \item[b.] \textbf{凹陷点频率测量}：【在此处填写凹陷点现象及对应读数】
+    \item[c.] \textbf{幅频特性曲线绘制}：【说明矩形系数与单调谐对比情况】
+    
+    \begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{【在此添加双调谐曲线图片路径】}
+    \caption{双调谐放大器幅频特性曲线}
+    \end{figure}
+    
+    \item[d.] \textbf{耦合电容对特性的影响}：【说明调整电容后的现象】
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        % \includegraphics[width=\textwidth, height=3.5cm]{【请在此处替换为扫频曲线图片路径1】}
+        \caption{耦合电容减小扫频曲线}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        % \includegraphics[width=\textwidth, height=3.5cm]{【请在此处替换为扫频曲线图片路径2】} 
+        \caption{耦合电容为某一值时扫频曲线}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        % \includegraphics[width=\textwidth, height=3.5cm]{【请在此处替换为扫频曲线图片路径3】} 
+        \caption{耦合电容增大扫频曲线}
+    \end{minipage}
+    \vspace{0.5em}
+    \caption{不同耦合情况下的幅频特性扫频曲线对比}
+\end{figure}
+
+\subsubsection*{2. 结果分析}
+
+\textbf{测试数据特征分析：}
+\begin{itemize}
+    \item \textbf{双调谐峰谷特征：} 【分析导致“凹凸交替”的过耦合等现象】
+    \item \textbf{选择性较单调谐优良：} 【分析增益平坦度及频带边缘陡峭的表现】
+\end{itemize}
+
+\subsection*{任务四：放大器动态范围测量}
+
+% 这里填写具体的实验任务四流程简述
+【此处填写系统配置与电压幅度增加过程说明】
+
+\subsubsection*{1. 测试结果}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c*{10}{c}}
+\toprule
+放大器输入 (mV) & 【数据1】 & 【数据2】 & 【...】 \\
+\midrule
+\textbf{放大器输出 (V)} & 【数据1】 & 【数据2】 & 【...】 \\
+\textbf{电压放大倍数} & 【数据1】 & 【数据2】 & 【...】 \\
+\bottomrule
+\end{tabular}
+\caption{放大器动态范围测试结果}
+\end{table}
+
+ \begin{figure}[htbp]
+ \centering
+%  \includegraphics[width=0.8\textwidth]{【请在此放入动态范围曲线图片路径】}
+ \caption{放大器动态范围曲线}
+ \end{figure}
+
+\subsubsection*{2. 结果分析}
+
+\textbf{测试数据及失真阶段分析：}
+\begin{itemize}
+    \item \textbf{线性动态范围分析：} 【分析小信号线性区内电压成正比放大表现】
+    \item \textbf{失真与非线性特征：} 【分析大信号激励下的倍数衰退与波形顶切现象】
+\end{itemize}
+
+\section*{四. 总结}
+
+【在此处填写完整的实验感悟与总结，包括对于单双调谐原理在工程上区别的体会、实验现象及数据特征背后原因的探究，仪器的使用技巧与注意事项总结等】
+
+\end{document}
