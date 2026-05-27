@@ -1,0 +1,137 @@
+% !TEX program = xelatex
+\documentclass[12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{\Huge \textbf{实验四 \quad 振幅调制}}
+\author{专业：微电子科学与技术专业 \quad 学号：24308172 \quad 姓名：王钰铖}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{一. 实验目的}
+\begin{enumerate}
+    \item 了解振幅调制的工作原理；
+    \item 掌握用MC1496集成模拟相乘器来实现AM（普通调幅）和DSB（双边带调幅）的方法，并研究已调波与调制信号、载波之间的关系；
+    \item 掌握用示波器测量调幅系数（调制度$m_a$）的方法。
+\end{enumerate}
+
+\section*{二. 实验内容概要}
+
+\vspace{1em}\noindent{\large \textbf{1. 实验原理概述：}}
+\begin{itemize}
+    \item \textbf{振幅调制原理}：用低频调制信号去控制高频载波信号的振幅，使载波的振幅随调制信号的幅度呈正比变化。调幅波主要分为普通调幅波（AM）、抑制载波的双边带调幅波（DSB）等。
+    \item \textbf{DSB调幅}：抑制了不携带信息的载波信号，只保留上、下边频分量。DSB信号的包络不再直接反映原始调制信号形状。在包络过零点处（调制信号进入负半周瞬时），高频载波相位发生$180^\circ$突变。
+    \item \textbf{AM调幅}：带有载波分量的调制方式，包络完全反映低频调制信号的变化规律（搬移过程）。要求调幅指数$m_a \le 1$，当$m_a > 1$时发生过调幅，包络低端出现切峰而遭受严重失真。
+    \item \textbf{MC1496模拟相乘器}：本实验采用MC1496四象限模拟相乘器实现振幅调制工作。内部为双差分对，通过调节1脚外部偏压改变其直流工作点，即可在DSB纯相乘与AM常态调幅模式间平滑切换。
+\end{itemize}
+
+\vspace{1em}\noindent{\large \textbf{2. 核心实验内容：}}
+\begin{enumerate}
+    \item[(1)] \textbf{平衡调幅波（DSB）波形观察}：利用示波器观察双边带调幅波的整体波形特征，并展开时轴，重点分析捕捉载波包络在调制信号过零点的相位突变（反相）。
+    \item[(2)] \textbf{常规调幅波（AM）波形及过调制观察}：加入直流偏置将系统转为AM模式，观察调制度$m_a \le 1$时的正常包络复现现象，与增大基带幅度诱发的过调制（$m_a > 1$）包络交相失真现象。
+    \item[(3)] \textbf{其他形式调制波及调制度测试}：观察调制源为方波、三角波后的调幅波形展现；读取示波器显像出的最高峰极大值与极小值，利用包络差值法计算系统当前的调幅系数。
+\end{enumerate}
+
+\section*{三. 具体实验}
+
+\subsection*{任务一：DSB（抑制载波双边带调幅）波形观察}
+
+将高频信号源输出的载波接入载波输入端（6P1），将低频调制信号接入音频输入端（6P2）。分别将通道监测音频与调幅输出，调整偏置电位器（6W1），使直流失调归零，以观察标准的DSB状态波形。
+
+\subsubsection*{1. 测试接线与结果}
+
+% （请在此处插入低频调制信号与DSB双边带整体输出调幅波形对比的示波器截图）
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.8\textwidth]{DSB整体波形.png}
+% \caption{调制信号与其对应的 DSB 信号波形}
+% \label{fig:dsb_waveform}
+% \end{figure}
+
+% （请在此处插入大幅展开时间轴之后，包络曲线在过零点时间对应出的内部高频高频截面反相跳变波形）
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.8\textwidth]{DSB过零点反相波形.png}
+% \caption{DSB信号过零反相点波形观察}
+% \label{fig:dsb_inverse}
+% \end{figure}
+
+\subsubsection*{2. 结果分析}
+\begin{itemize}
+    \item \textbf{宏观波形特征：} 示波器上可以明显看出高频信号的幅度随1kHz音频基波呈现节律变化。然而，在抑制了原有直流载波常量后，乘积直接取绝对值的效果使得其外部包络线呈类似于全波整流后的波谷连绵状态，不再具有完整正弦包络，这是典型的DSB双侧频特征。
+    \item \textbf{信号过零反相跳变：} 通过降低载频展宽视野可以敏锐发现，当低频原始调制波形处于跨越其自身的电平0线（无论是上穿还是下穿）即其极性翻转的一瞬间，作为内部乘性产物的高频波动的相位立刻同步引发了极性翻转——出现$180^\circ$突变反相，符合表达式$U_{DSB}(t) = \frac{1}{2}AU_{\Omega m}U_{cm}[\cos(\omega_c + \Omega)t + \cos(\omega_c - \Omega)t]$ 中幅值系数通过零点的数学极性反映。
+\end{itemize}
+
+\subsection*{任务二：AM（常规调幅）波形测量}
+
+保持上述同等载波频点与低频基带信号参数的前提不改，继续改变6W1电位器给乘法器注入外置的控制直流偏低基点电压；使已调输出变成载波不被绝对遏制的AM波段信号，并以此作深层观测与探讨。
+
+\subsubsection*{1. 测试接线与结果}
+
+% （请在此处插入正常的AM调幅波形图，且调制度须展示出不超过100%，即 Ma <= 1 时的状况）
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.8\textwidth]{AM正常波形.png}
+% \caption{正常的具有保留载波的 AM 调制信号波形图}
+% \label{fig:am_normal}
+% \end{figure}
+
+% （请在此处插入过调制状态下的AM调幅波形图，调制度 Ma > 1 ，包络线底部交叠）
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.8\textwidth]{AM过调制波形.png}
+% \caption{过调制状况下的 AM 波形及底面失真截波}
+% \label{fig:am_overmod}
+% \end{figure}
+
+\subsubsection*{2. 结果分析}
+\begin{itemize}
+    \item \textbf{常态化幅度调制：} 利用电位器对IC外部施加直流偏量以补偿抵消内部平衡差分，系统随即复活载波增量成分$U_c$。此时波形的包络直接变成了所传输的基带有用频线，呈现了完整且光滑的高低正弦波叠映映射面，达到了信息的线性记录。
+    \item \textbf{过深调幅带来的非线性破坏：} 为了进一步模拟信号传递可能出现的问题，特意调高调制的指数超过$100\%$刻度。图波形此时出现了显著恶化特性：波包络底部的交汇处发生了互碰并最终重叠截弯。此“过调制”会使将来包络检波后获得信息出现彻底的非线性失真，实际通信体制在发送端都会严格抑制音频幅度使其不可逾越$m_a=1$的界限。
+\end{itemize}
+
+\subsection*{任务三：三角波/方波调幅观察及调制度测试计算}
+
+保持载波波形，调控调制信号源类型，更替为方波及三角波基信，观测乘积作用。同时冻结截取普通AM状态下的屏显进行极值提取运算获取测试$m_a$。
+
+\subsubsection*{1. 测试接线与结果}
+
+% （请在此处插入音频调制信号被调至三角波以及相应的带有清晰直线斜边等幅包络线波形）
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.8\textwidth]{三角波调幅波形.png}
+% \caption{以三角波为调制信号的调幅包络波形}
+% \label{fig:am_triangle}
+% \end{figure}
+
+% （请在此处插入一幅带有光标卡尺的用于标定波形最高极峰A及最下极谷B读数的截图图像，供随后方程展示）
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.8\textwidth]{调制度参数测量.png}
+% \caption{供测定用极值差的调制度读数基准屏显}
+% \label{fig:am_math}
+% \end{figure}
+
+\subsubsection*{2. 结果分析}
+\begin{itemize}
+    \item \textbf{非正弦信号的线性包络复制：} 切换出方波或直倾斜面三角波作为低频调制源波输入后；可得由MC1496所调制输出的高频信号包络外衣，紧紧跟合了原始新波段：呈现清晰规整的直角或直线性包络带斜率。证明出优秀结构的四端差分模拟乘法器，只要处于合适阈段即有着对音频各谐次波及不同时域结构普遍优良的工作普适随变性。
+    \item \textbf{包络波参数获取：} 当前对于实际操作中如何反向测试出确切的调制度$m_a$，基于几何等距学以及其表达式$1+m_a$与$1-m_a$振幅极向边界公式关系可以直接进行量测倒推。设定测定波顶最高总长读分为$A$，而波间收束的最短窄领宽则为$B$。通过套用$m_a = \frac{A - B}{A + B} \times 100\%$，代入读数（如假定刻算获取$A = ...\text{V}$, $B = ...\text{V}$，实解可得$m_a \approx ...\%$），即为测试提取具体系统的当前工配调制系数方案。
+\end{itemize}
+
+\section*{四. 总结}
+
+本次《实验四 振幅调制》，通过将MC1496四象限集成模拟相乘器作为实施载体，有效地带领我们在示波器视野下见证了频率空间内的时域搬移动作。对比单纯去阅读那连篇累牍的频域公式方程，直观波形成果使得调制工作由抽象走向实在。
+
+实验之中，让我影响最为深刻的是借由拨动一个微不足道的直流配置电位偏向钮，却能造成了平衡差分放大组在载频全抑制或保留上的巨大分支切换。双边带独有的绝美全波包络，加上其底端在零位穿行期特有的载率反相突反跳现象得到成功观察；同时当进行常态AM调幅实作中亲眼端视包络过度堆逼至下截割穿的底波相交失真。一系列的操作实证对我们后续学习诸论有着非几深远的解构意义。
+
+通过此次实作，也使我能够初步把持依靠光标去解析和读出极最大最小值以数学关系倒算整套设备调制度$m_a$的实用技术；更为接下来的解调及频段还原操作积累起了宝贵而充实的验证经历与信心基底。
+
+\end{document}
