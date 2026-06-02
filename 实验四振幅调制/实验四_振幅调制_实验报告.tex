@@ -7,9 +7,10 @@
 \usepackage{booktabs}
 \usepackage{geometry}
 \geometry{a4paper, margin=2cm}
+\setlength{\abovecaptionskip}{0.2cm}
 
 \title{\Huge \textbf{实验四 \quad 振幅调制}}
-\author{专业：微电子科学与技术专业 \quad 学号：24308172 \quad 姓名：王钰铖}
+\author{专业：微电子科学与工程 \quad 学号：24308172 \quad 姓名：王钰铖}
 \date{}
 
 \begin{document}
@@ -46,84 +47,304 @@
 
 将高频信号源输出的载波接入载波输入端（6P1），将低频调制信号接入音频输入端（6P2）。分别将通道监测音频与调幅输出，调整偏置电位器（6W1），使直流失调归零，以观察标准的DSB状态波形。
 
-\subsubsection*{1. 测试接线与结果}
+\subsubsection*{1. DSB信号波形观察}
 
-% （请在此处插入低频调制信号与DSB双边带整体输出调幅波形对比的示波器截图）
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.8\textwidth]{DSB整体波形.png}
-% \caption{调制信号与其对应的 DSB 信号波形}
-% \label{fig:dsb_waveform}
-% \end{figure}
+\textbf{（1）测试结果}
 
-% （请在此处插入大幅展开时间轴之后，包络曲线在过零点时间对应出的内部高频高频截面反相跳变波形）
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.8\textwidth]{DSB过零点反相波形.png}
-% \caption{DSB信号过零反相点波形观察}
-% \label{fig:dsb_inverse}
-% \end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{DSB正常调幅1.png}
+\caption{实测：DSB信号波形}
+\label{fig:dsb_waveform}
+\end{figure}
 
-\subsubsection*{2. 结果分析}
-\begin{itemize}
-    \item \textbf{宏观波形特征：} 示波器上可以明显看出高频信号的幅度随1kHz音频基波呈现节律变化。然而，在抑制了原有直流载波常量后，乘积直接取绝对值的效果使得其外部包络线呈类似于全波整流后的波谷连绵状态，不再具有完整正弦包络，这是典型的DSB双侧频特征。
-    \item \textbf{信号过零反相跳变：} 通过降低载频展宽视野可以敏锐发现，当低频原始调制波形处于跨越其自身的电平0线（无论是上穿还是下穿）即其极性翻转的一瞬间，作为内部乘性产物的高频波动的相位立刻同步引发了极性翻转——出现$180^\circ$突变反相，符合表达式$U_{DSB}(t) = \frac{1}{2}AU_{\Omega m}U_{cm}[\cos(\omega_c + \Omega)t + \cos(\omega_c - \Omega)t]$ 中幅值系数通过零点的数学极性反映。
-\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{DSB波形1.png} % 替换为电子实验图像
+\caption{线上实验：DSB信号波形}
+\label{fig:dsb_waveform_sim}
+\end{figure}
 
-\subsection*{任务二：AM（常规调幅）波形测量}
+\textbf{（2）结果分析} 
 
-保持上述同等载波频点与低频基带信号参数的前提不改，继续改变6W1电位器给乘法器注入外置的控制直流偏低基点电压；使已调输出变成载波不被绝对遏制的AM波段信号，并以此作深层观测与探讨。
+示波器呈现无载波的连绵波谷形态，根本上源于DSB调制通过调整引脚1的外接电压完全抵消了原有支路上的直流偏置常数项。
 
-\subsubsection*{1. 测试接线与结果}
+由原理公式可知缺失了恒定载频，高频载频就只能依据输入的音频自身幅值在零点上下以绝对值翻转的形态摆动，并在每个零点发生相切与相位突变交汇。这表明双差分电流反馈电路在差分输入严密平衡时，完全达到了抑制载频和直接调制高调相乘的理想效果。
 
-% （请在此处插入正常的AM调幅波形图，且调制度须展示出不超过100%，即 Ma <= 1 时的状况）
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.8\textwidth]{AM正常波形.png}
-% \caption{正常的具有保留载波的 AM 调制信号波形图}
-% \label{fig:am_normal}
-% \end{figure}
+对比电子仿真实验结果可以发现，实测波形在整体形态及过零包络上与仿真真值高度吻合，体现了实际电路中的寄生参数等并未对乘法核心产生显著干扰。
 
-% （请在此处插入过调制状态下的AM调幅波形图，调制度 Ma > 1 ，包络线底部交叠）
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.8\textwidth]{AM过调制波形.png}
-% \caption{过调制状况下的 AM 波形及底面失真截波}
-% \label{fig:am_overmod}
-% \end{figure}
+\subsubsection*{2. DSB信号反相点观察}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{DSB反相点观察3.png}
+\caption{实测：反相点(常规频率)}
+\label{fig:dsb_inverse1}
+\end{figure}
 
-\subsubsection*{2. 结果分析}
-\begin{itemize}
-    \item \textbf{常态化幅度调制：} 利用电位器对IC外部施加直流偏量以补偿抵消内部平衡差分，系统随即复活载波增量成分$U_c$。此时波形的包络直接变成了所传输的基带有用频线，呈现了完整且光滑的高低正弦波叠映映射面，达到了信息的线性记录。
-    \item \textbf{过深调幅带来的非线性破坏：} 为了进一步模拟信号传递可能出现的问题，特意调高调制的指数超过$100\%$刻度。图波形此时出现了显著恶化特性：波包络底部的交汇处发生了互碰并最终重叠截弯。此“过调制”会使将来包络检波后获得信息出现彻底的非线性失真，实际通信体制在发送端都会严格抑制音频幅度使其不可逾越$m_a=1$的界限。
-\end{itemize}
 
-\subsection*{任务三：三角波/方波调幅观察及调制度测试计算}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{DSB反相点观察（降频）.png}
+\caption{实测：反相点(降频)}
+\label{fig:dsb_inverse2}
+\end{figure}
 
-保持载波波形，调控调制信号源类型，更替为方波及三角波基信，观测乘积作用。同时冻结截取普通AM状态下的屏显进行极值提取运算获取测试$m_a$。
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{DSB反相点.png} % 替换为电子实验图像
+\caption{线上：反相点(常规频率)}
+\label{fig:dsb_inverse1_sim}
+\end{figure}
 
-\subsubsection*{1. 测试接线与结果}
+\textbf{（2）结果分析} 
 
-% （请在此处插入音频调制信号被调至三角波以及相应的带有清晰直线斜边等幅包络线波形）
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.8\textwidth]{三角波调幅波形.png}
-% \caption{以三角波为调制信号的调幅包络波形}
-% \label{fig:am_triangle}
-% \end{figure}
+在DSB模式下，模拟乘法器的控制偏压被抵消，电路表现为纯粹的四象限相乘器。
 
-% （请在此处插入一幅带有光标卡尺的用于标定波形最高极峰A及最下极谷B读数的截图图像，供随后方程展示）
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.8\textwidth]{调制度参数测量.png}
-% \caption{供测定用极值差的调制度读数基准屏显}
-% \label{fig:am_math}
-% \end{figure}
+输出信号的包络呈现“全波整流”状且失去了原始的正弦形态，是因为其数学本质是$U_U_{DSB}(t) = K \cdot U_{\Omega}(t) \cdot U_{c}(t)$。当低频调制信号从正半周跨入负半周（过零点）时，乘数$U_{\Omega}(t)$在数学符号上发生反转，直接导致高频输出整体乘以-1，这在时域物理表现上即为相位发生精确的$180^\circ$突变。
 
-\subsubsection*{2. 结果分析}
+\subsubsection*{3. DSB信号波形与载波波形的相位比较}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{DSB与载波相位比较.png}
+\caption{实测：相位比较总体}
+\label{fig:dsb_phase_compare}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{DSB与载波同相.png}
+        \caption{调制正半周时与载波波形同相}
+        \label{fig:dsb_in_phase}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{DSB与载波反相.png}
+\caption{调制负半周时与载波波形反相}
+        \label{fig:dsb_out_of_phase}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{DSB反相点2.png} % 替换为电子实验图像
+\caption{线上：相位比较总体}
+\label{fig:dsb_phase_compare_sim}
+\end{figure}
+
+\textbf{（2）结果分析}
+
+把调制器的输入载波波形与输出的DSB波形展开进行精确的相位比较，可以发现清晰的规律：在调制信号正半周期间，DSB波形与载波完全同相；而在调制信号负半周期间，二者反相。
+
+这一现象本质上确切地反映了平衡调幅乘法器的工作基础，实现了音频控制高频相位的数学规律。同时，对照电子仿真波形可以发现，软件给出的理想相位跟踪完全映射到了实物仪器上，体现出良好的相敏同步能力。
+
+\subsection*{任务二：不同调制信号形式下的AM调幅波观察}
+
+保持上述同等载波频点前提不改，继续改变6W1电位器给乘法器注入外置的直流基点电压使得电路变为常规AM状态。随后改变低频输入信号源的波形与幅度，分别在三种调制信号类型下观测AM包络。
+
+\subsubsection*{1. 调制信号为正弦波的调幅波观察}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM正常调幅2.png}
+\caption{实测：正弦波正常波形}
+        \label{fig:am_sin_normal}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM临界.png}
+\caption{实测：正弦波临界波形}
+        \label{fig:am_sin_critical}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM过调.png}
+\caption{实测：正弦波过调波形}
+        \label{fig:am_sin_over}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{正常AM波形线上.png} % 替换为电子实验图像
+                \caption{线上：正弦波正常}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM临界线上.png} % 替换为电子实验图像
+                \caption{线上：正弦波临界}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM过调线上.png} % 替换为电子实验图像
+                \caption{线上：正弦波过调}
+    \end{minipage}
+\end{figure}
+
+\textbf{（2）结果分析}
+
+使用正弦波作为调制信号时，调节直流偏量补偿可解封并在输出端恢复载波分量。
+
+由乘法器工作原理可知，正常调幅下( < 100\%)，内部差分放大管工作在线性放大区，上下包络线无失真地复原了正弦低频；当调幅指数逼近100\%临界点时，低频最低点恰好使乘法管的偏置降至截止临界，包络波谷收束在零点；若继续增大音频幅值导致过调制，部分周期内差分管完全截止，高频信号被强行切断，造成波谷重叠错落及跨越零点时的削波和相位畸变现象。
+
+电子仿真图像同样在此处展现了过调幅时晶体管饱和截止区域对信号底层切分的破坏形态，实测严重失真的交织包络与仿真的非线性畸变如出一辙。
+
+\subsubsection*{2. 调制信号为三角波的调幅波观察}
+
+\textbf{（1）测试结果}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{AM三角波正常调幅2.png}
+\caption{实测：三角波低基频}
+\label{fig:tri_low_freq}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{正常三角波波形线上.png} % 替换为电子实验图像
+\caption{线上：三角波低基频}
+\label{fig:tri_low_freq_sim}
+\end{figure}
+
+
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM三角波正常调幅2.png}
+\caption{实测：三角波正常波形}
+        \label{fig:am_tri_normal}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM三角波临界.png}
+\caption{实测：三角波临界波形}
+        \label{fig:am_tri_critical}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM三角波过调.png}
+\caption{实测：三角波过调波形}
+        \label{fig:am_tri_over}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{正常三角波波形线上.png} % 替换为电子实验图像
+                \caption{线上：三角波正常}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{三角波临界线上.png} % 替换为电子实验图像
+                \caption{线上：三角波临界}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{三角波过调线上.png} % 替换为电子实验图像
+                \caption{线上：三角波过调}
+    \end{minipage}
+\end{figure}
+
+\textbf{（2）结果分析} 
+
+切换输入信号为三角波调制后，AM信号的包络呈现出规整的带斜率上斜下斜直波痕迹。
+
+其物理根源是输入三角波严格线性的电平变动规律借由完全线性的差动互导管转化为了包络的高低起伏。只要未发生过大调制，差分输入口都能忠实跟随斜率；当进入过调制时，三角波尖锐的底部向下逼迫突破零位门限，致使跨导电路产生剧烈截止阻断，于是在包络轴上强行产生了翻转切割和交指式的畸变。
+
+从电子实验结果对照来看，纯粹系统仿真环境下的包络线也同样在底端交错重叠，完全证实该截底失真现象是由MC1496乘法器差分拓扑的本征线性度限制引发的，而非单纯的外围干扰。
+
+\subsubsection*{3. 调制信号为方波的调幅波观察}
+
+\textbf{（1）测试结果}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{AM方波正常调幅-1kHz.png}
+\caption{实测：方波1kHz}
+\label{fig:tri_low_freq}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM方波正常调幅.png}
+        \caption{实测：方波正常频率}
+    \end{minipage}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM方波临界.png}
+        \caption{实测：方波临界状态}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM方波过调.png}
+        \caption{实测：方波过调状态}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{调制度测量1.png}
+\caption{实测：参数A的测量}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{调制度测量2.png}
+\caption{实测：参数B的测量}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{调制度测量.png} % 替换为电子实验图像
+\caption{线上：参数的测量}
+\end{figure}
+
+\subsubsection*{（2）结果分析}
 \begin{itemize}
     \item \textbf{非正弦信号的线性包络复制：} 切换出方波或直倾斜面三角波作为低频调制源波输入后；可得由MC1496所调制输出的高频信号包络外衣，紧紧跟合了原始新波段：呈现清晰规整的直角或直线性包络带斜率。证明出优秀结构的四端差分模拟乘法器，只要处于合适阈段即有着对音频各谐次波及不同时域结构普遍优良的工作普适随变性。
-    \item \textbf{包络波参数获取：} 当前对于实际操作中如何反向测试出确切的调制度$m_a$，基于几何等距学以及其表达式$1+m_a$与$1-m_a$振幅极向边界公式关系可以直接进行量测倒推。设定测定波顶最高总长读分为$A$，而波间收束的最短窄领宽则为$B$。通过套用$m_a = \frac{A - B}{A + B} \times 100\%$，代入读数（如假定刻算获取$A = ...\text{V}$, $B = ...\text{V}$，实解可得$m_a \approx ...\%$），即为测试提取具体系统的当前工配调制系数方案。
+    \item \textbf{包络波参数获取：} 当前对于实际操作中如何反向测试出确切的调制度，基于包络表达式中最大振幅正比于$+m_a$，最小振幅正比于$-m_a$，可以直接进行量测倒推。设定测定波顶包络的最大峰峰值为$A$，波谷的最小峰峰值为$B$。结合测量结果，从图中光标读数可得$A = 1.73\mathrm{V}$， $B= 0.55\mathrm{V}$。
+
+    \vspace{1em}
+    \textbf{【参数代入与公式计算】}
+    \[
+        m_a = \frac{A - B}{A + B} \times 100\% = \frac{1.73 - 0.55}{1.73 + 0.55} \times 100\% \approx 51.7\%
+    \]
+
+    \textbf{【测试结果分析】} 
+    通过以上公式成功将抽象的波形幅度直观转化为$51.7\%$ 的特定调幅深度。这一结果充分验证了利用示波器时域波峰波谷极大极小值提取法来测试通信系统深度的可行性与科学准确性。
+
+    
+    在电子实验仿真端，通过捕捉仿真软件的光标同样可得$A_{sim}=0.5{V}$，$B_{sim}=0.16{V}$。
+    \[
+        m_{a(sim)} = \frac{A_{sim} - B_{sim}}{A_{sim} + B_{sim}} \times 100\% \approx 51.5 \%
+    \]
+    结合前面的硬件实测验证发现，......（请补充输入具体的对比分析文字，如误差原因、器件真实消耗等）......
 \end{itemize}
 
 \section*{四. 总结}
@@ -131,6 +352,26 @@
 本次《实验四 振幅调制》，通过将MC1496四象限集成模拟相乘器作为实施载体，有效地带领我们在示波器视野下见证了频率空间内的时域搬移动作。对比单纯去阅读那连篇累牍的频域公式方程，直观波形成果使得调制工作由抽象走向实在。
 
 实验之中，让我影响最为深刻的是借由拨动一个微不足道的直流配置电位偏向钮，却能造成了平衡差分放大组在载频全抑制或保留上的巨大分支切换。双边带独有的绝美全波包络，加上其底端在零位穿行期特有的载率反相突反跳现象得到成功观察；同时当进行常态AM调幅实作中亲眼端视包络过度堆逼至下截割穿的底波相交失真。一系列的操作实证对我们后续学习诸论有着非几深远的解构意义。
+
+\vspace{0.5em}
+为了验证实验硬件最终的生成质量，绘制基于{DSB}(t) = U_{\Omega}(t) U_c(t)$ 与 {AM}(t) = (1+m_a U_{\Omega}(t)) U_c(t)$ 理论方程式的两幅理论极标杆对比图如下：
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{DSB理论波形.png}
+\caption{DSB双边带抑制载波理论端面}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{AM满调幅理论波形.png}
+\caption{AM 100\%理想化满调幅理论标面}
+    \end{minipage}
+\end{figure}
+
+仔细对比这两幅完美数学仿真波形与上面的全实测示波器波形就可以深度确认：在DSB形态下，其实验包络相位过零交翻处的结切相接甚至连细节抖动都完全符合左侧生成的数学期望，证明了低本振频漏极小；而在正常的AM调幅(100\%临界波)状态下，示波器观察点的临界碰底呈现与右侧理论图如出一辙，精准复现了未被侵入非线性区的高保真调幅传输质量。
+
 
 通过此次实作，也使我能够初步把持依靠光标去解析和读出极最大最小值以数学关系倒算整套设备调制度$m_a$的实用技术；更为接下来的解调及频段还原操作积累起了宝贵而充实的验证经历与信心基底。
 
