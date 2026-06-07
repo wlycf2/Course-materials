@@ -1,0 +1,208 @@
+% !TEX program = xelatex
+\documentclass[12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\setlength{\abovecaptionskip}{0.2cm}
+
+\title{\Huge \textbf{实验五 \quad 振幅解调器}}
+\author{专业：微电子科学与技术专业 \quad 学号：24308172 \quad 姓名：王钰铖}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{一. 实验目的}
+\begin{enumerate}
+    \item 掌握用包络检波器实现AM波解调的方法，了解滤波电容数值对AM波解调影响；
+    \item 理解包络检波器只能解调m≤100％的AM波，而不能解调m＞100％的AM波以及DSB波的概念；
+    \item 掌握用MC1496模拟乘法器组成的同步检波器来实现AM波和DSB波解调的方法；
+    \item 理解同步检波器能解调各种AM波以及DSB波的概念。
+\end{enumerate}
+
+\section*{二. 实验内容概要}
+
+\vspace{1em}
+
+
+\noindent{\large \textbf{1. 实验原理概述：}}
+\begin{itemize}
+    \item \textbf{二极管包络检波}：利用二极管的单向导电性及RC充放电原理，使输出电压的包络能够跟随输入调幅波包络的变化，从而检出调制信号。RC时间常数的选择至关重要，过大会产生对角线切割失真，过小则高频分量滤不干净。此外，交直流负载不匹配时可能引起底部切割失真。
+    \item \textbf{同步检波（相干检波）}：在接收端提供一个与发送端载波同频、同相的本地载波信号，与接收到的调幅信号通过乘法器相乘，再经低通滤波器滤除高频分量，即可无失真地恢复出原始调制信号。该方法不依赖于信号的包络，因此可以解调DSB、SSB以及过调制的AM波。
+\end{itemize}
+
+\vspace{1em}
+
+
+\noindent{\large \textbf{2. 核心实验内容：}}
+\begin{enumerate}
+    \item[(1)] \textbf{二极管包络检波器性能测试}：使用示波器观察包络检波器对不同调制度（$m_a=30\%, 100\%, >100\%$）的AM波以及DSB波的解调情况，并观察对角线切割失真和底部切割失真的现象。
+    \item[(2)] \textbf{同步检波器性能测试}：使用MC1496同步检波器对不同调制度的AM波以及DSB波进行解调，观察并记录输出波形，并与调制信号进行比较。
+    \item[(3)] \textbf{两种检波方式对比}：归纳总结两种检波器的解调特性，并分析比较其优缺点。
+\end{enumerate}
+
+\section*{三. 具体实验}
+
+\subsection*{任务一：二极管包络检波实验}
+
+将调幅实验中产生的AM波接入二极管包络检波器输入端（5P6），在输出端（5P9）用示波器观察解调波形。
+
+\subsubsection*{1. 不同调制度AM波的解调}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/包络检波AM.png}
+        \caption{正常AM波解调 ($m_a = 30\%$)}
+        \label{fig:env_normal}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/包络检波过调AM波.png}
+        \caption{过调制AM波解调 ($m_a > 100\%$)}
+        \label{fig:env_over}
+    \end{minipage}
+\end{figure}
+
+	extbf{（2）结果分析} 
+对于正常调制度的AM波（$m_a \le 100\%$），包络检波器可以很好地恢复出原始的调制信号，输出波形为光滑的正弦波。然而，当输入为过调制AM波时，由于其包络在底部发生了交叠失真，包络检波器无法正确识别相位变化，导致解调出的波形在底部出现严重的非线性失真，频率变为了调制信号的两倍。这证明了包络检波无法正确解调过调制信号。
+
+\subsubsection*{2. 检波失真现象观察}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/包络检波AM对角线失真.png}
+        \caption{对角线切割失真}
+        \label{fig:env_diag}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/包络检波AM割底失真.png}
+        \caption{底部切割失真}
+        \label{fig:env_bottom}
+    \end{minipage}
+\end{figure}
+
+	extbf{（2）结果分析} 
+通过调节直流负载5W3，增大了RC放电时间常数，使得电容放电速度跟不上AM包络下降的速度，导致输出波形在下降沿呈倾斜的对角线形状，即对角线切割失真。通过调节交流负载5W5，使得交直流负载电阻不匹配，在调制度较深时，导致二极管在部分时间内反向截止，输出波形的底部被切去，即底部切割失真。
+
+\subsubsection*{3. 其他调制信号解调}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/包络检波三角波.png}
+        \caption{三角波信号解调}
+        \label{fig:env_tri}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/包络检波方波1kHz.png}
+        \caption{方波信号解调}
+        \label{fig:env_sq}
+    \end{minipage}
+\end{figure}
+	extbf{（2）结果分析} 
+当调制信号为三角波和方波时，在不产生失真的条件下，包络检波器同样可以较好地恢复出原始调制信号的波形。
+
+\subsection*{任务二：同步检波实验}
+将调幅电路输出（6P3）接到同步检波输入端（6P5），并将本地载波（6P1）连接到同步检波的载波输入端（6P4）。
+
+\subsubsection*{1. 不同调制度AM波的解调}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/同步检波AM波.png}
+        \caption{正常AM波解调 ($m_a = 30\%$)}
+        \label{fig:sync_am_normal}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/同步检波临界AM波.png}
+        \caption{临界AM波解调 ($m_a = 100\%$)}
+        \label{fig:sync_am_critical}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/同步检波过调AM波.png}
+        \caption{过调AM波解调 ($m_a > 100\%$)}
+        \label{fig:sync_am_over}
+    \end{minipage}
+\end{figure}
+
+	extbf{（2）结果分析} 
+同步检波器对各种调制度的AM波都表现出完美的解调性能。无论是正常调幅、临界调幅还是过调幅，其输出波形均为无失真的正弦波。这是因为同步检波的原理是相乘与滤波，不依赖于输入信号的包络形状，因此即使在包络失真的过调制情况下，依然能准确地恢复原始调制信号。
+
+\subsubsection*{2. DSB波及其他信号解调}
+\textbf{（1）测试结果}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/同步检波DSB.png}
+        \caption{DSB波解调 (正弦)}
+        \label{fig:sync_dsb_sin}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/同步检波DSB三角波.png}
+        \caption{DSB波解调 (三角波)}
+        \label{fig:sync_dsb_tri}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{oscilliscope_result/同步检波DSB方波.png}
+        \caption{DSB波解调 (方波)}
+        \label{fig:sync_dsb_sq}
+    \end{minipage}
+\end{figure}
+
+	extbf{（2）结果分析} 
+同步检波器能够完美解调DSB信号。DSB信号的包络不反映调制信号，且在过零点有180°的相位突变，包络检波器完全无法处理。但同步检波通过与本地载波相乘，成功将频谱搬回基带，恢复了原始的正弦、三角波和方波信号。这充分证明了同步检波的普适性和强大性能。
+
+\section*{四. 总结}
+
+\begin{table}[H]
+\centering
+\caption{两种检波器解调特性对比}
+\vspace{0.5em}
+\begin{tabular}{ccccc}
+	oprule
+	extbf{输入的调幅波} & \multicolumn{3}{c}{\textbf{AM波}} & \textbf{DSB} \
+\cmidrule(lr){2-4}
+ & $m_a=30\%$ & $m_a=100\%$ & $m_a>100\%$ & \
+\midrule
+	extbf{包络检波} & 能 & 能 & 不能 & 不能 \
+	extbf{同步检波} & 能 & 能 & 能 & 能 \
+ottomrule
+\end{tabular}
+\label{tab:demod_compare}
+\end{table}
+
+本次实验通过对二极管包络检波器和MC1496同步检波器的对比研究，深刻揭示了两种主流振幅解调方式的原理、性能和适用范围。
+
+包络检波电路简单、成本低廉，但在性能上存在固有缺陷。它仅适用于包络能正确反映调制信号的普通AM波（$m_a \le 100\%$），对过调制AM波和DSB波则会产生严重失真甚至完全无法解调。此外，其RC参数和交直流负载的匹配对解调质量影响显著，设计不当会引入对角线切割和底部切割失真。
+
+相比之下，同步检波展现了无与伦比的优越性。其核心是相干解调原理，通过与本地同步载波相乘实现频谱搬移，不依赖于信号包络，因此能够无失真地解调包括过调制AM波、DSB波在内的各种振幅调制信号。其缺点是电路相对复杂，且对本地恢复载波的频率和相位同步精度有较高要求。
+
+通过本次实验，我们不仅掌握了两种解调电路的调试方法，更从实践上验证了相干解调在现代通信系统中的重要地位和强大优势，为后续更复杂的通信系统学习打下了坚实的实践基础。
+
+\end{document}
